@@ -1,0 +1,61 @@
+using System;
+using System.Runtime.InteropServices;
+
+class Program
+{
+    // підключення MessageBox
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    public static extern int MessageBox(IntPtr hWnd, String text, String caption, int options);
+
+    static void Main()
+    {
+        bool playAgain = true;
+
+        while (playAgain)
+        {
+            Console.WriteLine("Загадайте число");
+            Console.ReadLine();
+
+            int left = 0;
+            int right = 100;
+            bool guessed = false;
+
+            // доки не буде правильно
+            while (!guessed)
+            {
+                int mid = (left + right) / 2;
+
+                // показуємо припущення
+                MessageBox(IntPtr.Zero, "Число: " + mid + " ?", "Спроба", 0);
+
+                Console.WriteLine($"Число {mid}? (>, <, =)");
+                string answer = Console.ReadLine();
+
+                if (answer == ">")
+                {
+                    left = mid + 1;
+                }
+                else if (answer == "<")
+                {
+                    right = mid - 1;
+                }
+                else if (answer == "=")
+                {
+                    MessageBox(IntPtr.Zero, "Виграв!", "Успіх", 0);
+                    guessed = true;
+                }
+                else
+                {
+                    Console.WriteLine("Невірно");
+                }
+            }
+            Console.WriteLine("Грати ще раз? (y/n)");  // грати знову
+            string again = Console.ReadLine();
+
+            if (again.ToLower() != "y")
+            {
+                playAgain = false;
+            }
+        }
+    }
+}
