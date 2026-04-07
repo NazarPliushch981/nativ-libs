@@ -1,0 +1,19 @@
+using System;
+using System.Runtime.InteropServices;
+
+class Program
+{
+    // підключення 
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    public static extern int MessageBox(IntPtr hWnd, String text, String caption, int options);
+
+    static void Main()
+    {
+        Console.WriteLine("Введіть: ");
+        string userText = Console.ReadLine();
+        MessageBox(IntPtr.Zero, userText, "Повідомлення", 0);
+
+        Console.WriteLine("Натисніть букву: ");
+        Console.ReadKey();
+    }
+}
